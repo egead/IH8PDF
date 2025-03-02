@@ -27,7 +27,7 @@ ih8pdf [OPTIONS] <file1.pdf> [file2.pdf ...]
 1. **Clone** the repository:
 
 ```bash
-git clone https://github.com/YourUsername/ih8pdf.git
+git clone https://github.com/egead/IH8PDF.git
 cd ih8pdf
 ```
 
