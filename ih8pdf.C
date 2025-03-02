@@ -51,8 +51,16 @@ int main(int argc, char *argv[]){
     }
 
     for (int i=optind; i<argc;i++){
-        char *input_file=argv[i];
+        char *input_directory=argv[i];
+        char *input_file;
+        if (strchr(input_directory, '/')==NULL){ // on the current directory
+            input_file = input_directory;
+        }
+        else{
+            input_file=strrchr(input_directory, '/')+1; // add 1 to skip the '/'
+        }
         char out_file[FILE_BUFFER_SIZE];
+	
 
         snprintf(out_file,FILE_BUFFER_SIZE,"compressed_%s",input_file);
 
@@ -61,11 +69,11 @@ int main(int argc, char *argv[]){
         snprintf(cmd, CMD_BUFFER_SIZE,
                  "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=%s "
                  "-dNOPAUSE -dQUIET -dBATCH -sOutputFile=%s %s",
-                 pdf_setting, out_file, input_file);
+                 pdf_setting, out_file, input_directory);
         printf("Running command: %s\n",cmd);
         int ret=system(cmd);
         if (ret != 0){
-            fprintf(stderr, "Error compressing the file: %s\n",input_file);
+            fprintf(stderr, "Error compressing the file: %s\n",input_directory);
         }
     }
     return EXIT_SUCCESS;
