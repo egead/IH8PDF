@@ -28,7 +28,7 @@ ih8pdf [OPTIONS] <file1.pdf> [file2.pdf ...]
 
 ```bash
 git clone https://github.com/egead/IH8PDF.git
-cd ih8pdf
+cd IH8PDF
 ```
 
 2. **Compile**:
