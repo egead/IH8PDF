@@ -29,46 +29,47 @@ ih8pdf [OPTIONS] <file1.pdf> [file2.pdf ...]
 ```bash
 git clone https://github.com/YourUsername/ih8pdf.git
 cd ih8pdf
-    ```
+```
 
 2. **Compile**:
 
-    ```bash
+```bash
 make
-    ```
+```
 
 3. **Install** to `/usr/local/bin`:
 
-    ```bash
+```bash
 sudo make install
 make clean
-    ```
+```
 
 4. **Uninstall** 
 
-    ```bash
+```bash
 sudo make uninstall
-    ```
+```
 
 ### Examples
 
 1. **Compress a Single PDF File**
 
-    ```bash
+```bash
 ih8pdf file1.pdf
-    ```
+```
 Output => compressed_file1.pdf
-1. **Specify a Compression Level**
 
-    ```bash
-    ih8pdf -c 1 file1.pdf
-    ```
+2. **Specify a Compression Level**
+
+```bash
+ih8pdf -c 1 file1.pdf
+```
 Uses compression level 1 (/ebook) => compressed_file1.pdf
 
-1. **Compress Multiple Files**:
+3. **Compress Multiple Files**:
 
-    ```bash
-    ih8pdf file1.pdf file2.pdf
-    ```
+```bash
+ih8pdf file1.pdf file2.pdf
+```
  Output => compressed_file1.pdf, compressed_file2.pdf
 
