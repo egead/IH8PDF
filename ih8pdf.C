@@ -53,6 +53,8 @@ int main(int argc, char *argv[]){
     for (int i=optind; i<argc;i++){
         char *input_directory=argv[i];
         char *input_file;
+
+        // Needs to be updated! Causing issues!
         if (strchr(input_directory, '/')==NULL){ // on the current directory
             input_file = input_directory;
         }
