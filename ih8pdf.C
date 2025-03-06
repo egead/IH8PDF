@@ -51,31 +51,37 @@ int main(int argc, char *argv[]){
     }
 
     for (int i=optind; i<argc;i++){
-        char *input_directory=argv[i];
-        char *input_file;
+        char *input_directory=argv[i], input_directory_backup[FILE_BUFFER_SIZE / 2],
+             *input_file, *output = input_directory, new_filename[FILE_BUFFER_SIZE], out_file[FILE_BUFFER_SIZE];
 
-        // Needs to be updated! Causing issues!
-        if (strchr(input_directory, '/')==NULL){ // on the current directory
+        // to be modularized
+        if (strchr(input_directory, '/') == NULL) { // on the current directory
             input_file = input_directory;
+            strcpy(input_directory_backup, input_directory);
+            snprintf(out_file, FILE_BUFFER_SIZE, "compressed_%s", input_file);
         }
-        else{
-            input_file=strrchr(input_directory, '/')+1; // add 1 to skip the '/'
+        else {
+            strcpy(input_directory_backup, input_directory);
+            input_file = strrchr(input_directory, '/') + 1; // add 1 to skip the '/'
+            output[strrchr(input_directory, '/') - input_directory] = '\0'; // remove the old filename from the path
+            strcpy(new_filename, "/compressed_");
+            strcat(new_filename, input_file);
+            strcat(output, new_filename); // add the new filename to the path
+            snprintf(out_file, FILE_BUFFER_SIZE, "%s", output);
         }
-        char out_file[FILE_BUFFER_SIZE];
-	
 
-        snprintf(out_file,FILE_BUFFER_SIZE,"compressed_%s",input_file);
+        printf("Input file: %s\n",input_directory);
 
         //Build Ghostscript command
         char cmd[CMD_BUFFER_SIZE];
         snprintf(cmd, CMD_BUFFER_SIZE,
                  "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=%s "
                  "-dNOPAUSE -dQUIET -dBATCH -sOutputFile=%s %s",
-                 pdf_setting, out_file, input_directory);
+                 pdf_setting, out_file, input_directory_backup);
         printf("Running command: %s\n",cmd);
         int ret=system(cmd);
         if (ret != 0){
-            fprintf(stderr, "Error compressing the file: %s\n",input_directory);
+            fprintf(stderr, "Error compressing the file: %s\n",input_directory_backup);
         }
     }
     return EXIT_SUCCESS;
